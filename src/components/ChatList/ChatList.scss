@@ -1,0 +1,44 @@
+.chat-list {
+    color: blue;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 30px;
+
+    &-del {
+        background-color: rgb(100, 198, 237);
+        border-radius: 15px;
+        padding: 2px 10px;
+        margin-left: 5px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+    }
+}
+
+.chatlist-btn {
+    margin-left: 25px;
+    outline: 1px solid grey;
+    padding: 10px;
+    background-color: rgb(100, 198, 237);
+    color: white;
+    cursor: pointer;
+}
+
+.chat-list-submit .form {
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.chat-list-submit .form .field {
+    width: 60px;
+}
+
+.chat-list-submit .form .btn {
+    font-size: 10px;
+    padding: 3px;
+    width: 60px;
+    height: 51px;
+    background-color: rgb(100, 198, 237);
+}
