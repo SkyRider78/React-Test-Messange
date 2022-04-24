@@ -1,14 +1,16 @@
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Form } from "../../components/Form/Form";
 import { setName, SET_NAME, toggleCheckbox } from "../../store/profile/actions";
+import { selectName, selectShowName } from "../../store/profile/selectors";
 import "./Profile.scss"
 
 export const Profile = (onLogout) => {
     const dispatch = useDispatch();
 
-    
-    const state = useSelector(state => state);
-    console.log(state);
+
+    const name = useSelector(selectName);
+    const showName = useSelector(selectShowName);
+
     const handleClick = () => {
         dispatch(toggleCheckbox);
     };
@@ -20,9 +22,9 @@ export const Profile = (onLogout) => {
     return (
         <>
             <h3>This is PROFILE</h3>
-            <button onClick={onLogout}>LOGOUT</button> 
+            <button onClick={onLogout}>LOGOUT</button>
             <div className="profile-wrap">
-                {state.showName && <span className="profile-name">{state.name}</span>}
+                {showName && <span className="profile-name">{name}</span>}
                 <button className="profile-btn" onClick={handleClick}>change show name</button>   {/* style={{margin: 10}} */}
                 <Form onSubmit={handleSubmit} />
             </div>

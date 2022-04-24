@@ -66,6 +66,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PublicRoute authed={authed} />}>
             <Route path="" element={<Home onAuth={handleLogin} />} />
+            <Route path="singup" element={<Home onAuth={handleLogin} isSignUp />} />
           </Route>
 
           <Route path="/profile" element={<PrivateRoute authed={authed} />} >
@@ -79,7 +80,7 @@ function App() {
           <Route path="*" element={<h4>404</h4>} />
         </Routes>
       </BrowserRouter>
-    </ThemeContext.Provider>
+    </ThemeContext.Provider >
 
   );
 }
