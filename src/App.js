@@ -9,6 +9,19 @@ import { ThemeContext } from './utils/ThemeContext';
 import { Profile } from './screens/Profile/Profile';
 import { Home } from './screens/Home/Home';
 import { Articles } from './screens/Articles/Articles';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
+import { PublicRoute } from './components/PublicRoute/PublicRoute';
+
+
+const [authed, setAuthed] = useState(false);
+
+const handleLogin = () => {
+  setAuthed(true);
+};
+
+const handleLogout = () => {
+  setAuthed(false);
+};
 
 
 function App() {
@@ -51,8 +64,14 @@ function App() {
           </li>
         </ul>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<PublicRoute authed={authed} />}>
+            <Route path="" element={<Home onAuth={handleLogin} />} />
+          </Route>
+
+          <Route path="/profile" element={<PrivateRoute authed={authed} />} >
+            <Route path="" element={<Profile onLogout={handleLogout} />} />
+          </Route>
+
           <Route path="/articles" element={<Articles />} />
           <Route path="/chat" element={<ChatList />}>
             <Route path=":id" element={<Chat />} />
