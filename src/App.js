@@ -12,20 +12,18 @@ import { Articles } from './screens/Articles/Articles';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { PublicRoute } from './components/PublicRoute/PublicRoute';
 
-
-const [authed, setAuthed] = useState(false);
-
-const handleLogin = () => {
-  setAuthed(true);
-};
-
-const handleLogout = () => {
-  setAuthed(false);
-};
-
-
 function App() {
   const [theme, setTheme] = useState("dark");
+
+  const [authed, setAuthed] = useState(false);
+
+  const handleLogin = () => {
+    setAuthed(true);
+  };
+
+  const handleLogout = () => {
+    setAuthed(false);
+  };
 
   // const [messages, setMessages] = useState(initMessages);
 

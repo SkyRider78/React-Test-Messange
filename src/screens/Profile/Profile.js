@@ -22,8 +22,8 @@ export const Profile = (onLogout) => {
     return (
         <>
             <h3>This is PROFILE</h3>
-            <button onClick={onLogout}>LOGOUT</button>
             <div className="profile-wrap">
+                <button className="profile-btn" onClick={onLogout}>LOGOUT</button>
                 {showName && <span className="profile-name">{name}</span>}
                 <button className="profile-btn" onClick={handleClick}>change show name</button>   {/* style={{margin: 10}} */}
                 <Form onSubmit={handleSubmit} />

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { LoginForm } from "../../components/LoginForm/LoginForm";
-import { singUP } from "../../services/firebase";
+import { logIn, singUP } from "../../services/firebase";
 
 export const Home = ({ onAuth, isSignUP }) => {
     const handleSubmit = ({ login, pass }) => {
