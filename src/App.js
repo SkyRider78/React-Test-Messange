@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
 
 import './App.css';
@@ -11,6 +11,8 @@ import { Home } from './screens/Home/Home';
 import { Articles } from './screens/Articles/Articles';
 import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { PublicRoute } from './components/PublicRoute/PublicRoute';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './services/firebase';
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -18,13 +20,26 @@ function App() {
   const [authed, setAuthed] = useState(false);
 
   const handleLogin = () => {
+    console.log(' LOGIN ATTEMPT !');
     setAuthed(true);
   };
 
   const handleLogout = () => {
+    console.log(' LOGOUT ATTEMPT !');
     setAuthed(false);
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {   //слушатель события - изменение состояния авторизации
+      if (user) {
+        handleLogin();
+      } else {
+        handleLogout();
+      }
+    });
+
+    return unsubscribe;
+  }, []);
   // const [messages, setMessages] = useState(initMessages);
 
   const toggleTheme = () => {
@@ -64,7 +79,7 @@ function App() {
         <Routes>
           <Route path="/" element={<PublicRoute authed={authed} />}>
             <Route path="" element={<Home onAuth={handleLogin} />} />
-            <Route path="singup" element={<Home onAuth={handleLogin} isSignUp />} />
+            <Route path="signup" element={<Home onAuth={handleLogin} isSignUp />} />
           </Route>
 
           <Route path="/profile" element={<PrivateRoute authed={authed} />} >

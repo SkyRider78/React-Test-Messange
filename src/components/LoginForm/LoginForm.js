@@ -1,4 +1,5 @@
 import { useState } from "react"
+import './LoginForm.scss'
 
 export const LoginForm = ({ onSubmit }) => {
     const [login, setLogin] = useState("");
@@ -22,10 +23,15 @@ export const LoginForm = ({ onSubmit }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="email" value={login} onChange={handleChangeLogin} />
-            <input type="password" value={pass} onChange={handleChangePass} />
-            <input type="submit" />
+            <fieldset className="regform-flex">
+                <legend>ПОЛЬЗОВАТЕЛЬ</legend>
+                <input className="regform-field" type="email" placeholder="Введите логин" value={login} onChange={handleChangeLogin} />
+                <input className="regform-field" type="password" placeholder="Введите пароль" value={pass} onChange={handleChangePass} />
+                <input className="regform-field" type="submit" />
+            </fieldset>
         </form>
     );
-
 };
+
+
+

@@ -1,23 +1,33 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { LoginForm } from "../../components/LoginForm/LoginForm";
-import { logIn, singUP } from "../../services/firebase";
+import { logIn, signUp } from "../../services/firebase";
+import "./Home.scss"
 
-export const Home = ({ onAuth, isSignUP }) => {
-    const handleSubmit = ({ login, pass }) => {
-        if (isSignUP) {
-            singUP(login, pass);
-        } else {
-            logIn(login, pass);
+export const Home = ({ isSignUp }) => {
+    const [error, setError] = useState("");
+    const handleSubmit = async ({ login, pass }) => {
+        try {
+            if (isSignUp) {
+                await signUp(login, pass);
+            } else {
+                await logIn(login, pass);
+            }
+        } catch (e) {
+            setError(e.message);
         }
     };
     return (
         <>
-            <h3>HOME PAGE</h3>;
+            <h3>HOME PAGE</h3>
             <LoginForm onSubmit={handleSubmit} />
-            <Link to={isSignUP ? "/" : "/signup"}>
-                {isSignUP ? "to login" : "to signup"}
-            </Link>
+            {error && <h4 className="errMessage">{error}</h4>}
+            <div style={{ margin: 10 }}>
+                <Link to={isSignUp ? "/" : "/signup"}>
+                    {isSignUp ? "to login" : "to signup"}
+                </Link>
+            </div>
         </>
     );
 };

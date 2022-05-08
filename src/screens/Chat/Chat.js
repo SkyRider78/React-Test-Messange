@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useRef } from "react";
+import { onValue, push } from "firebase/database";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { Form } from "../../components/Form/Form";
 import { MessageList } from "../../components/MessageList/MessageList";
+import { getMsgsListRefById, getMsgsRefById } from "../../services/firebase";
 import { addMessage, addMessageWithReply } from "../../store/messages/actions";
 import { selectMessages, selectMessagesByChatId } from "../../store/messages/selectors";
 import { AUTHORS } from "../../utils/constants";
@@ -10,43 +12,43 @@ import { AUTHORS } from "../../utils/constants";
 export function Chat() {
     const { id } = useParams();
 
+    const [messages, setMessages] = useState([]);
+
     const getMessages = useMemo(() => selectMessagesByChatId(id), [id]);
-    const messages = useSelector(getMessages);
+    // const messages = useSelector(getMessages);
     const dispatch = useDispatch();
 
-    // let timeout =useRef();
-    // const wrapperRef = useRef();
-
     const sendMessage = (text) => {
-        dispatch(
-            addMessageWithReply({
-                author: AUTHORS.human,
-                text: text,
-                id: `msg-${Date.now()}`,
-            },
-                id
-            )
-        );
+        push(getMsgsListRefById(id), {
+            author: AUTHORS.human,
+            text: text,
+            id: `msg-${Date.now()}`,
+        });
+        // dispatch(
+        //     addMessageWithReply(
+        //         {
+        //             author: AUTHORS.human,
+        //             text: text,
+        //             id: `msg-${Date.now()}`,
+        //         },
+        //         id
+        //     )
+        // );
     };
 
-    //робот
-    // useEffect(() => {
-    //     let timeout;
-    //     const lastMessage = messages?.[messages?.length - 1];
-    //     if (lastMessage?.author === AUTHORS.human) {
-    //         timeout = setTimeout(() => {
-    //             dispatch(
-    //                 addMessage({
-    //                     author: AUTHORS.robot, text: "hello!", id: `msg-${Date.now()}`,
-    //                 }, id
-    //                 ));
-    //         }, 1000);
-    //     }
+    useEffect(() => {
+        const unsubscribe = onValue(getMsgsRefById(id), (snapshot) => {
+            const val = snapshot.val();
+            if (!snapshot.val()?.exists) {
+                setMessages(null);
+            } else {
+                console.log(val.messageList);
+                setMessages(Object.values(val.messageList || {}));
+            }
+        });
 
-    //     return () => {  //для чистки памяти
-    //         clearTimeout(timeout);
-    //     };
-    // }, [messages]);
+        return unsubscribe;
+    }, [id]);
 
     if (!messages) {
         return <Navigate to="/chat" replace />
