@@ -36,6 +36,9 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "resetMocks": false
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -47,5 +50,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jest": "^28.1.0",
+    "jest-fetch-mock": "^3.0.3",
+    "jest-watch-typeahead": "^0.6.5"
   }
 }

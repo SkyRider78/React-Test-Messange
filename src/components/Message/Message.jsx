@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { ThemeContext } from "../../utils/ThemeContext";
 import "./Message.style.scss";
 
-export const Message = ({ author, text }) => {
-   const { theme } = useContext(ThemeContext);
+export const Message = ({ author, text, theme }) => {
+   // const { theme } = useContext(ThemeContext);
    console.log(theme);
 
    return (
@@ -19,3 +19,10 @@ Message.propTypes = {
    author: PropTypes.string.isRequired, // тип обязательно строка
    text: PropTypes.string,
 }
+const withThemeContext = (Component) => (props) => {
+   const { theme } = useContext(ThemeContext);
+
+   return <Component {...props} theme={theme} />;
+};
+
+export const MessageWithBlueColor = withThemeContext(Message);

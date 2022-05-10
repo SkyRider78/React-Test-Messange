@@ -1,5 +1,5 @@
 .profile-name {
-    color: green;
+    color: forestgreen;
     font-weight: bold;
 }
 
@@ -14,15 +14,16 @@
 .profile-btn {
 
     padding: 18px 23px;
-    background-color: #33a70f;
+    background-color: blue;;
     font-weight: bold;
     border: none;
     border-radius: 20px;
     transition-duration: 0.5s;
+    margin: 2px 0;
 
     font-size: 14px;
     line-height: 17px;
-    color: #FFFFFF;
+    color: yellow;
 
     &:hover {
         background-color: #55c733;
