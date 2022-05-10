@@ -1,0 +1,26 @@
+
+.regform-flex {
+    display: flex;
+    flex-direction: column;width: 400px;
+    border-radius: 10px;
+    
+& legend {
+color: rgb(100, 198, 237);
+font-weight: bold;
+}
+}
+
+.regform-field {
+    margin: 10px 0;
+    width: 360px;
+    height: 45px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    border: 1px solid #A4A4A4;
+    &:hover {
+    background-color: rgb(255, 255, 145);
+    color: rgb(57, 184, 235);
+    border: 1px solid rgb(100, 198, 237);
+    transition-duration: 0.3s;
+    }
+}
